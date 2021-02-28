@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tada_client/models/domain/LastMessage.dart';
+import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/models/domain/Room.dart';
 import 'package:tada_client/models/domain/Sender.dart';
 import 'package:tada_client/service/api/api_client.dart';
@@ -28,9 +28,9 @@ class ApiMessaging {
     final result = parsed.result
         .map((e) => Room(
               name: e.name,
-              lastMessage: LastMessage(
+              lastMessage: Message(
                 text: e.lastMessage.text,
-                created: e.lastMessage.created,
+                created: DateTime.parse(e.lastMessage.created),
                 room: e.lastMessage.room,
                 sender: Sender(
                   username: e.lastMessage.sender.username,

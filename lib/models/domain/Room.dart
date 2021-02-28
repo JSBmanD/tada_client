@@ -1,8 +1,8 @@
-import 'package:tada_client/models/domain/LastMessage.dart';
+import 'package:tada_client/models/domain/Message.dart';
 
 class Room {
   Room({this.name, this.lastMessage});
 
   final String name;
-  final LastMessage lastMessage;
+  Message lastMessage;
 }

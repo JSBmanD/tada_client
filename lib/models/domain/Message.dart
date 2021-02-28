@@ -1,10 +1,10 @@
 import 'package:tada_client/models/domain/Sender.dart';
 
-class LastMessage {
-  LastMessage({this.room, this.created, this.sender, this.text});
+class Message {
+  Message({this.room, this.created, this.sender, this.text});
 
   final String room;
-  final String created;
+  final DateTime created;
   final Sender sender;
   final String text;
 }

@@ -19,6 +19,7 @@ class ApiService {
         error: true,
         compact: true,
         maxWidth: 90));
+
     _client = ApiClient(dio: dio);
 
     _messaging = ApiMessaging(client: _client);

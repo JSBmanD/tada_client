@@ -43,14 +43,15 @@ class __MainViewStateState extends State<_MainViewState>
                 extendBodyBehindAppBar: true,
                 body: Navigator(
                   pages: [
-                    MaterialPage(
-                      child: MainView(),
-                    ),
                     if (!state.isLoggedIn)
                       MaterialPage(
                         child: LoginView(
                           mainBloc: BlocProvider.of<MainBloc>(context),
                         ),
+                      ),
+                    if (state.isLoggedIn)
+                      MaterialPage(
+                        child: MainView(),
                       ),
                   ],
                   onPopPage: (route, result) {

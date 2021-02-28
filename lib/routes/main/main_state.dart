@@ -5,11 +5,13 @@ class MainState extends Equatable {
   MainState({
     this.version = 0,
     this.isLoggedIn = false,
+    this.rooms,
   });
 
   /// Версия для держании блока в курсе стейта
   final int version;
   final bool isLoggedIn;
+  final List<Room> rooms;
 
   @override
   List<Object> get props => [
@@ -20,10 +22,12 @@ class MainState extends Equatable {
   MainState copyWith({
     int version,
     bool isLoggedIn,
+    List<Room> rooms,
   }) {
     return MainState(
       version: version ?? this.version,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      rooms: rooms ?? this.rooms,
     );
   }
 }

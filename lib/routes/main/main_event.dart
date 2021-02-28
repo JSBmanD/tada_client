@@ -2,7 +2,7 @@ part of 'main_bloc.dart';
 
 abstract class MainEvent extends Equatable {}
 
-/// Получить все проекты
+/// Получить все комнаты
 class InitRooms extends MainEvent {
   @override
   List<Object> get props => [];
@@ -16,4 +16,13 @@ class Logout extends MainEvent {
 class LoginSuccess extends MainEvent {
   @override
   List<Object> get props => [];
+}
+
+class MessageAdded extends MainEvent {
+  MessageAdded({@required this.message});
+
+  final Message message;
+
+  @override
+  List<Object> get props => [message];
 }
