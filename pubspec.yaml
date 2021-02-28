@@ -1,0 +1,49 @@
+name: tada_client
+description: A new GSHack application.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.22.4 <=1.22.6"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.0
+  get: ^3.25.6
+  rxdart: ^0.25.0
+  flutter_bloc: ^6.1.2
+  dio: ^3.0.10
+  intl: ^0.16.1
+  url_launcher: ^5.7.10
+  equatable: ^1.2.6
+  shimmer_animation: ^1.0.0
+  shimmer: ^1.1.2
+  firebase_messaging: ^7.0.3
+  flutter_local_notifications: ^4.0.1+1
+  google_fonts: ^1.1.1
+  pretty_dio_logger: ^1.1.1
+  connectivity: ^2.0.0
+  hive_flutter: ^0.3.1
+  logger: ^0.9.4
+  logger_flutter:
+    git: https://github.com/ewertonrp/logger_flutter
+  auto_size_text: ^2.1.0
+  websok:
+    git: https://github.com/ConsoleTVs/Websok.git
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/img/
