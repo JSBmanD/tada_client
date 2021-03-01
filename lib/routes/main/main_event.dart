@@ -18,6 +18,7 @@ class LoginSuccess extends MainEvent {
   List<Object> get props => [];
 }
 
+/// Пришло сообщение
 class MessageAdded extends MainEvent {
   MessageAdded({@required this.message});
 
@@ -25,4 +26,18 @@ class MessageAdded extends MainEvent {
 
   @override
   List<Object> get props => [message];
+}
+
+class OpenRoom extends MainEvent {
+  OpenRoom({@required this.roomId});
+
+  final String roomId;
+
+  @override
+  List<Object> get props => [roomId];
+}
+
+class ClosePage extends MainEvent {
+  @override
+  List<Object> get props => [];
 }

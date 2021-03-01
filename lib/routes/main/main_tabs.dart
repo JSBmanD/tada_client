@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tada_client/routes/login/login_view.dart';
 import 'package:tada_client/routes/main/main_bloc.dart';
 import 'package:tada_client/routes/main/main_view.dart';
+import 'package:tada_client/routes/room/room_view.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
 class MainTabs extends StatelessWidget {
@@ -35,7 +36,7 @@ class __MainViewStateState extends State<_MainViewState>
           children: [
             WillPopScope(
               onWillPop: () async {
-                // context.read<MineProjectsBloc>().add(ClosePage());
+                 context.read<MainBloc>().add(ClosePage());
                 return false;
               },
               child: Scaffold(
@@ -52,6 +53,10 @@ class __MainViewStateState extends State<_MainViewState>
                     if (state.isLoggedIn)
                       MaterialPage(
                         child: MainView(),
+                      ),
+                    if (state.roomId != null && state.roomId.isNotEmpty)
+                      MaterialPage(
+                        child: RoomView(roomId: state.roomId),
                       ),
                   ],
                   onPopPage: (route, result) {

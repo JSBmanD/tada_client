@@ -1,20 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:tada_client/components/ui/room_item.dart';
 import 'package:tada_client/routes/main/main_bloc.dart';
-import 'package:tada_client/service/ws/messaging/dto/SendMessageRequest.dart';
-import 'package:tada_client/service/ws/ws_service.dart';
 
 class MainView extends StatelessWidget {
-  final WSService _websocket = Get.find();
-
-  void closePage() {}
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainBloc, MainState>(
+    return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         return Material(
           color: Colors.white,
@@ -31,22 +24,13 @@ class MainView extends StatelessWidget {
                       for (var room in state.rooms)
                         RoomItem(
                           onTap: () {
-                            // TODO: Сделать событие на тап
+                            context
+                                .read<MainBloc>()
+                                .add(OpenRoom(roomId: room.name));
                           },
                           name: room.name,
                           lastMessage: room.lastMessage,
                         ),
-                    Container(
-                      child: CupertinoButton(
-                        onPressed: () {
-                          _websocket.sendMessage(SendMessageRequest(
-                            text: 'Test string',
-                            room: 'kozma',
-                          ));
-                        },
-                        child: Text('send'),
-                      ),
-                    ),
                     const SizedBox(height: 64),
                   ],
                 ),
@@ -54,9 +38,6 @@ class MainView extends StatelessWidget {
             ),
           ),
         );
-      },
-      listener: (context, state) {
-        if (state.isLoggedIn) {}
       },
     );
   }

@@ -18,12 +18,6 @@ class WSService {
   BehaviorSubject onError;
   BehaviorSubject onDone;
 
-/*  void onData(dynamic message) {
-    final parsed = MessageDto.fromJson(json.decode(message));
-    messagesSubscription.add(message);
-    print(message);
-  }*/
-
   WSService() {
     final websok =
         IOWebsok(host: 'nane.tada.team/ws?username=Test@kozma', tls: true)

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/models/domain/Room.dart';
@@ -21,6 +23,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final MessagingService _messaging = Get.find();
   final WSService _ws = Get.find();
 
+  final _androidAppRetain = MethodChannel('android_app_retain');
+
   @override
   Stream<MainState> mapEventToState(MainEvent event) async* {
     if (event is InitRooms) {
@@ -31,6 +35,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       yield state.copyWith(isLoggedIn: true);
     } else if (event is MessageAdded) {
       yield _mapMessageAddedToState(event, state);
+    } else if (event is OpenRoom) {
+      yield _mapOpenRoomToState(event, state);
+    } else if (event is ClosePage) {
+      yield _mapClosePageToState(event, state);
     }
   }
 
@@ -38,21 +46,20 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     InitRooms event,
     MainState state,
   ) async* {
-    yield state.copyWith(isLoggedIn: _storage.userSettings.isLoggedIn());
-
     final rooms = await _messaging.getRooms();
     rooms.sort(((first, second) =>
         second.lastMessage.created.compareTo(first.lastMessage.created)));
 
-    yield state.copyWith(rooms: rooms, version: state.version + 1);
+    yield state.copyWith(
+      rooms: rooms,
+      isLoggedIn: _storage.userSettings.isLoggedIn(),
+      version: state.version + 1,
+    );
 
-    _ws.messageListener
-        .listen((value) {
-          print(value.text);
-          add(MessageAdded(message: value));
-        })
-        .asFuture()
-        .then((value) {});
+    _ws.messageListener.listen((value) {
+      print(value.text);
+      add(MessageAdded(message: value));
+    });
   }
 
   MainState _mapLogoutToState(
@@ -61,6 +68,19 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   ) {
     _storage.userSettings.clearData();
     return state.copyWith(isLoggedIn: false);
+  }
+
+  MainState _mapClosePageToState(
+    ClosePage event,
+    MainState state,
+  ) {
+    if (state.roomId != null)
+      return state.copyWith(roomId: null);
+    else {
+      if (Platform.isAndroid)
+        _androidAppRetain.invokeMethod('sendToBackground');
+      return state;
+    }
   }
 
   MainState _mapMessageAddedToState(
@@ -73,6 +93,14 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         ?.lastMessage = event.message;
     state.rooms.sort(((first, second) =>
         second.lastMessage.created.compareTo(first.lastMessage.created)));
-    return state.copyWith(rooms: state.rooms, version: state.version + 1);
+    return state.copyWith(
+        rooms: state.rooms, roomId: state.roomId, version: state.version + 1);
+  }
+
+  MainState _mapOpenRoomToState(
+    OpenRoom event,
+    MainState state,
+  ) {
+    return state.copyWith(roomId: event.roomId);
   }
 }
