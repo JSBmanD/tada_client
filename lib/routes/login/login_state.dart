@@ -6,7 +6,10 @@ class LoginState extends Equatable {
     this.loginSuccess = false,
   });
 
+  /// Введенное имя
   final String name;
+
+  /// Успешный логин
   final bool loginSuccess;
 
   @override
@@ -16,7 +19,6 @@ class LoginState extends Equatable {
       ];
 
   LoginState copyWith({
-    int version,
     String name,
     bool loginSuccess,
   }) {

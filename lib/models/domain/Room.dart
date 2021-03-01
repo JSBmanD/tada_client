@@ -1,8 +1,12 @@
-import 'package:tada_client/models/domain/LastMessage.dart';
+import 'package:tada_client/models/domain/Message.dart';
 
+/// Модель комнаты
 class Room {
   Room({this.name, this.lastMessage});
 
+  /// Название
   final String name;
-  final LastMessage lastMessage;
+
+  /// Последнее сообщение
+  Message lastMessage;
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+/// Запрос на отправку сбщ
 class SendMessageRequest {
   SendMessageRequest({
     this.room,

@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 import 'package:tada_client/routes/login/login_view.dart';
 import 'package:tada_client/routes/main/main_bloc.dart';
 import 'package:tada_client/routes/main/main_view.dart';
+import 'package:tada_client/routes/room/room_view.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
 class MainTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainBloc(MainState())..add(InitRooms()),
+      create: (context) => MainBloc(MainState())..add(InitAuth()),
       child: _MainViewState(),
     );
   }
@@ -28,27 +29,35 @@ class __MainViewStateState extends State<_MainViewState>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainBloc, MainState>(
+    return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         return Stack(
           alignment: Alignment.center,
           children: [
             WillPopScope(
               onWillPop: () async {
-                // context.read<MineProjectsBloc>().add(ClosePage());
+                context.read<MainBloc>().add(ClosePage());
                 return false;
               },
               child: Scaffold(
-                backgroundColor: Colors.transparent,
+                backgroundColor: _styles.theme.backgroundColor,
                 extendBodyBehindAppBar: true,
                 body: Navigator(
                   pages: [
-                    MaterialPage(
-                      child: MainView(),
-                    ),
                     if (!state.isLoggedIn)
                       MaterialPage(
                         child: LoginView(
+                          mainBloc: BlocProvider.of<MainBloc>(context),
+                        ),
+                      ),
+                    if (state.isLoggedIn)
+                      MaterialPage(
+                        child: MainView(),
+                      ),
+                    if (state.roomId != null && state.roomId.isNotEmpty)
+                      MaterialPage(
+                        child: RoomView(
+                          roomId: state.roomId,
                           mainBloc: BlocProvider.of<MainBloc>(context),
                         ),
                       ),
@@ -56,7 +65,7 @@ class __MainViewStateState extends State<_MainViewState>
                   onPopPage: (route, result) {
                     if (!route.didPop(result)) return false;
 
-                    // context.read<MineProjectsBloc>().add(ClosePage());
+                    context.read<MainBloc>().add(ClosePage());
 
                     return true;
                   },
@@ -65,9 +74,6 @@ class __MainViewStateState extends State<_MainViewState>
             ),
           ],
         );
-      },
-      listener: (context, state) {
-        if (state.isLoggedIn) {}
       },
     );
   }

@@ -14,7 +14,10 @@ class MessageDto {
   /// Сообщение
   String text;
 
-  MessageDto({this.room, this.created, this.sender, this.text});
+  /// ИД отправки
+  String id;
+
+  MessageDto({this.room, this.created, this.sender, this.text, this.id});
 
   MessageDto.fromJson(Map<String, dynamic> json) {
     room = json['room'];
@@ -22,6 +25,7 @@ class MessageDto {
     sender =
         json['sender'] != null ? new SenderDto.fromJson(json['sender']) : null;
     text = json['text'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +36,7 @@ class MessageDto {
       data['sender'] = this.sender.toJson();
     }
     data['text'] = this.text;
+    data['id'] = this.id;
     return data;
   }
 }

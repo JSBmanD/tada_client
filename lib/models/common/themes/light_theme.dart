@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tada_client/models/common/themes/base_theme.dart';
 
+/// Светлая тема
 class LightTheme implements BaseTheme {
   LightTheme() {
     this.backgroundColor = Color(0xFFF7F8FB);

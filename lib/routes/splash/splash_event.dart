@@ -4,13 +4,9 @@ part of 'splash_bloc.dart';
 abstract class SplashEvent extends Equatable {}
 
 /// Событие начала загрузки
-class SplashLoadStarted extends SplashEvent {
-  SplashLoadStarted(this.duration);
-
-  final int duration;
-
+class StartLoading extends SplashEvent {
   @override
-  List<Object> get props => [duration];
+  List<Object> get props => [];
 }
 
 /// Событие тика таймера

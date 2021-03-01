@@ -1,3 +1,4 @@
+/// Дто отправителя
 class SenderDto {
   String username;
 

@@ -38,7 +38,7 @@ class _MainViewState extends StatelessWidget {
     return BlocConsumer<LoginBloc, LoginState>(
       builder: (context, state) {
         return Material(
-          color: Colors.white,
+          color: _styles.theme.backgroundColor,
           child: SafeArea(
             child: Column(
               children: [
@@ -124,7 +124,9 @@ class _MainViewState extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       color: _styles.theme.accentColor,
-                      onPressed: () => context.read<LoginBloc>().add(Login()),
+                      onPressed: () {
+                        context.read<LoginBloc>().add(Login());
+                      },
                       child: Center(
                         child: Text(
                           'Войти',
