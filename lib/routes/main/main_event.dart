@@ -14,11 +14,13 @@ class InitRooms extends MainEvent {
   List<Object> get props => [];
 }
 
+/// Выйти из акка
 class Logout extends MainEvent {
   @override
   List<Object> get props => [];
 }
 
+/// Успешный логин
 class LoginSuccess extends MainEvent {
   @override
   List<Object> get props => [];
@@ -34,6 +36,7 @@ class MessageAdded extends MainEvent {
   List<Object> get props => [message];
 }
 
+/// Открыть комнату
 class OpenRoom extends MainEvent {
   OpenRoom({@required this.roomId});
 
@@ -43,16 +46,19 @@ class OpenRoom extends MainEvent {
   List<Object> get props => [roomId];
 }
 
+/// Создать комнату
 class CreateRoom extends MainEvent {
   @override
   List<Object> get props => [];
 }
 
+/// Навигация назад
 class ClosePage extends MainEvent {
   @override
   List<Object> get props => [];
 }
 
+/// Поменялся инпут комнаты
 class RoomNameChanged extends MainEvent {
   RoomNameChanged({@required this.value});
 
@@ -62,6 +68,7 @@ class RoomNameChanged extends MainEvent {
   List<Object> get props => [value];
 }
 
+/// Поменялся инпут сбщ
 class FirstMessageChanged extends MainEvent {
   FirstMessageChanged({@required this.value});
 
@@ -71,6 +78,7 @@ class FirstMessageChanged extends MainEvent {
   List<Object> get props => [value];
 }
 
+/// Очистить инпуты
 class ClearFields extends MainEvent {
   @override
   List<Object> get props => [];

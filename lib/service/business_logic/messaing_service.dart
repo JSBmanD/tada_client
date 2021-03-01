@@ -12,10 +12,12 @@ class MessagingService {
     _messaging = Get.find<ApiService>().getMessagingClient();
   }
 
+  /// Получить все комнаты
   Future<List<Room>> getRooms() async {
     return await _messaging.getRooms();
   }
 
+  /// Получить все сообщения из комнаты
   Future<List<Message>> getRoomMessages(String roomId) async {
     return await _messaging.getRoomMessages(roomId);
   }

@@ -20,13 +20,29 @@ class MainState extends Equatable {
 
   /// Версия для держании блока в курсе стейта
   final int version;
+
+  /// Юзер залогинен
   final bool isLoggedIn;
+
+  /// Комнаты
   final List<Room> rooms;
+
+  /// Ид комнаты для открытия
   final String roomId;
+
+  /// Имя комнаты
   final String roomName;
+
+  /// Первое сбщ
   final String firstMessage;
+
+  /// Подписка на новые сообщения
   StreamSubscription<Message> messagesSubscription;
+
+  /// Контроллер румы
   TextEditingController roomNameController;
+
+  /// Контроллер сбщ
   TextEditingController firstMessageController;
 
   @override

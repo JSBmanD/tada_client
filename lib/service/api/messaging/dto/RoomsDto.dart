@@ -1,5 +1,6 @@
 import 'package:tada_client/service/api/messaging/dto/SenderDto.dart';
 
+/// Дто списка комнат
 class RoomsDto {
   List<ResultDto> result;
 

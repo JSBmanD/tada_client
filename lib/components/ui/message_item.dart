@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
+/// Виджет сообщения
 class MessageItem extends StatelessWidget {
-  final StylesService _styles = Get.find();
-
   MessageItem({Key key, this.message}) : super(key: key);
 
+  final StylesService _styles = Get.find();
+
+  /// Объект сообщения
   final Message message;
 
   @override

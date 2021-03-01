@@ -7,7 +7,10 @@ class SplashState extends Equatable {
     this.initFinished = false,
   });
 
+  /// Сколько осталось тиков до конца
   final int ticksUntilEnd;
+
+  /// Инициализация завершена
   final bool initFinished;
 
   @override

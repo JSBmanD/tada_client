@@ -1,5 +1,6 @@
 import 'package:tada_client/service/api/messaging/dto/SenderDto.dart';
 
+/// Дто списка сообщений
 class MessageListDto {
   List<Result> result;
 

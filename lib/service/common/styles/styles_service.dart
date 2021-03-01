@@ -1,6 +1,7 @@
 import 'package:tada_client/models/common/themes/base_theme.dart';
 import 'package:tada_client/models/common/themes/light_theme.dart';
 
+/// Сервис стилей
 class StylesService {
   String themeType;
   BaseTheme theme;

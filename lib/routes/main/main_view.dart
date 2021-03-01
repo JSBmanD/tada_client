@@ -8,12 +8,10 @@ import 'package:tada_client/components/ui/room_item.dart';
 import 'package:tada_client/helpers/image_names.dart';
 import 'package:tada_client/routes/main/main_bloc.dart';
 import 'package:tada_client/service/common/connectivity/connectivity_service.dart';
-import 'package:tada_client/service/common/image/image_service.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
 class MainView extends StatelessWidget {
   final StylesService _styles = Get.find();
-  final ImageService _image = Get.find();
   final ConnectivityService _connect = Get.find();
 
   @override
@@ -93,7 +91,7 @@ class MainView extends StatelessWidget {
                               context: context,
                               builder: (innerContext) {
                                 return Container(
-                                  height: 200,
+                                  height: 300,
                                   color: _styles.theme.accentColor,
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
@@ -105,12 +103,28 @@ class MainView extends StatelessWidget {
                                           color: _styles.theme.backgroundColor,
                                         ),
                                       ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        'Название комнаты',
+                                        style: _styles.theme.body2TextStyle
+                                            .copyWith(
+                                          color: _styles.theme.backgroundColor,
+                                        ),
+                                      ),
                                       CustomTextField(
                                         onChanged: (value) {
                                           context.read<MainBloc>().add(
                                               RoomNameChanged(value: value));
                                         },
                                         controller: state.roomNameController,
+                                      ),
+                                      const SizedBox(height: 24),
+                                      Text(
+                                        'Первое сообщение',
+                                        style: _styles.theme.body2TextStyle
+                                            .copyWith(
+                                          color: _styles.theme.backgroundColor,
+                                        ),
                                       ),
                                       CustomTextField(
                                         onChanged: (value) {

@@ -142,6 +142,13 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     } else if (firstMessage.length == 0) {
       _error.addError(ErrorModel(message: 'Вы не заполнили первое сообщение'));
       return;
+    } else if (chatName.length > _storage.userSettings.maxRoomTitleLength) {
+      _error.addError(ErrorModel(message: 'Слишком длинное название комнаты'));
+      return;
+    } else if (firstMessage.length > _storage.userSettings.maxMessageLength) {
+      _error
+          .addError(ErrorModel(message: 'Слишком длинный текст для отправки'));
+      return;
     }
     if (_connect.isConnectedToInternet) {
       var roomOpened = false;

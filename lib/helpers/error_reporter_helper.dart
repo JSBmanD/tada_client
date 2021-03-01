@@ -30,6 +30,7 @@ class ErrorReporterHelper {
         message: error.message, callback: error.callback, type: error.type);
   }
 
+  /// Репорт инфо сбщ
   static void reportInfo(ErrorModel error) {
     _logger.i(error.message, error.exception);
 

@@ -4,7 +4,7 @@ import 'package:tada_client/models/domain/Settings.dart';
 import 'package:tada_client/service/api/api_client.dart';
 import 'package:tada_client/service/api/settings/dto/SettingsDto.dart';
 
-/// Клиент для настроек
+/// Эндпоинты для настроек
 class ApiSettings {
   final ApiClient client;
 

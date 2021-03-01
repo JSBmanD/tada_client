@@ -7,7 +7,7 @@ import 'package:tada_client/service/api/api_client.dart';
 import 'package:tada_client/service/api/messaging/dto/MessageListDto.dart';
 import 'package:tada_client/service/api/messaging/dto/RoomsDto.dart';
 
-/// Ендпоинты проектов
+/// Эндпоинты сообщений
 class ApiMessaging {
   final ApiClient client;
 

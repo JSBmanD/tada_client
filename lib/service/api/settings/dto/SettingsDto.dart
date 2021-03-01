@@ -1,3 +1,4 @@
+/// Дто настроек
 class SettingsDto {
   ResultDto result;
 

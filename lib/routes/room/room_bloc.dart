@@ -12,6 +12,7 @@ import 'package:tada_client/models/error_model.dart';
 import 'package:tada_client/service/business_logic/messaing_service.dart';
 import 'package:tada_client/service/common/connectivity/connectivity_service.dart';
 import 'package:tada_client/service/common/log/error_service.dart';
+import 'package:tada_client/service/common/storage/storage_service.dart';
 import 'package:tada_client/service/ws/messaging/dto/SendMessageRequest.dart';
 import 'package:tada_client/service/ws/ws_service.dart';
 
@@ -24,6 +25,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   final MessagingService _messaging = Get.find();
   final ErrorService _error = Get.find();
   final WSService _ws = Get.find();
+  final StorageService _storage = Get.find();
   final ConnectivityService _connect = Get.find();
 
   bool needUpdate = false;
@@ -81,6 +83,10 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     final message = RegexHelper.removeUnneededSpaces(state.comment);
     if (message.length == 0) {
       _error.addError(ErrorModel(message: 'Вы не ввели ни одного символа!'));
+      return;
+    } else if (message.length > _storage.userSettings.maxMessageLength) {
+      _error
+          .addError(ErrorModel(message: 'Слишком длинный текст для отправки'));
       return;
     }
 

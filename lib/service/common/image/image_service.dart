@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tada_client/helpers/image_helper.dart';
 
+/// Сервис изображений
 class ImageService {
   /// Получить изображение универсальное к локализации
   Image commonImage(String name) => ImageHelper.commonImage(name);

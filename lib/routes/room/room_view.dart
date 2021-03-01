@@ -9,7 +9,6 @@ import 'package:tada_client/components/ui/message_item.dart';
 import 'package:tada_client/helpers/image_names.dart';
 import 'package:tada_client/routes/main/main_bloc.dart';
 import 'package:tada_client/routes/room/room_bloc.dart';
-import 'package:tada_client/service/common/image/image_service.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
 class RoomView extends StatelessWidget {
@@ -31,7 +30,6 @@ class _RoomViewState extends StatelessWidget {
   _RoomViewState({Key key, this.mainBloc}) : super(key: key);
 
   final StylesService _styles = Get.find();
-  final ImageService _image = Get.find();
 
   final MainBloc mainBloc;
 

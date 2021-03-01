@@ -50,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         message: 'Вы не ввели имя',
       ));
       return;
-    } else if (name.length >= _storage.userSettings.maxUsernameLength) {
+    } else if (name.length > _storage.userSettings.maxUsernameLength) {
       _errorService.addError(ErrorModel(
         message: 'Ваше имя слишком длинное',
       ));
@@ -61,7 +61,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     await _ws.init();
     yield state.copyWith(
       loginSuccess: true,
-      version: state.version + 1,
     );
   }
 }

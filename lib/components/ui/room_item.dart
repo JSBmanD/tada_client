@@ -3,14 +3,20 @@ import 'package:get/get.dart';
 import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
+/// Виджет комнаты
 class RoomItem extends StatelessWidget {
-  final StylesService _styles = Get.find();
-
   RoomItem({Key key, this.name, this.lastMessage, this.onTap})
       : super(key: key);
 
+  final StylesService _styles = Get.find();
+
+  /// Название
   final String name;
+
+  /// Последнее сообщение
   final Message lastMessage;
+
+  /// Коллбэк
   final Function onTap;
 
   @override

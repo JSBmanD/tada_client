@@ -14,9 +14,17 @@ class RoomState extends Equatable {
 
   /// Версия для держании блока в курсе стейта
   final int version;
+
+  /// Ид комнаты
   final String roomId;
+
+  /// Коммент в инпуте
   final String comment;
+
+  /// Все сбщ
   final List<Message> messages;
+
+  /// Контроллер сбщ
   TextEditingController textController;
 
   @override

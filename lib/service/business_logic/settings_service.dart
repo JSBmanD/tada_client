@@ -11,6 +11,7 @@ class SettingsService {
     _settings = Get.find<ApiService>().getSettingsClient();
   }
 
+  /// Получить настройки
   Future<Settings> getSettings() async {
     return await _settings.getSettings();
   }

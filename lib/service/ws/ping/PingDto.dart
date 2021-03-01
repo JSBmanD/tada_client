@@ -1,3 +1,4 @@
+/// Дто пинга
 class PingDto {
   bool pong;
 

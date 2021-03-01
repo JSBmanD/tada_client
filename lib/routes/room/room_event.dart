@@ -22,11 +22,13 @@ class MessageAdded extends RoomEvent {
   List<Object> get props => [message];
 }
 
+/// Отправить сбщ
 class SendMessage extends RoomEvent {
   @override
   List<Object> get props => [];
 }
 
+/// Поменялся коммент в инпуте
 class CommentChanged extends RoomEvent {
   CommentChanged({@required this.value});
 

@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tada_client/service/ws/ws_service.dart';
 
+/// Сервис для проверки состояния инета
 class ConnectivityService {
   final WSService _ws = Get.find();
 
+  /// Стрим со статусом коннекта
   BehaviorSubject<bool> connectionStatus;
 
+  /// Подключен ли к инету
   bool isConnectedToInternet = true;
 
   Future<void> init() async {

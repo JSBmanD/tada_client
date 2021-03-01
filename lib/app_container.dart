@@ -6,7 +6,6 @@ import 'package:tada_client/helpers/error_reporter_helper.dart';
 import 'package:tada_client/models/error_model.dart';
 import 'package:tada_client/service/common/connectivity/connectivity_service.dart';
 import 'package:tada_client/service/common/log/error_service.dart';
-import 'package:tada_client/service/ws/ws_service.dart';
 
 /// Главный контейнер приложения
 class AppContainer extends StatefulWidget {
@@ -21,7 +20,6 @@ class AppContainer extends StatefulWidget {
 
 class _AppContainerState extends State<AppContainer> {
   final ErrorService _errors = Get.find();
-  final WSService _ws = Get.find();
   final ConnectivityService _connect = Get.find();
 
   /// Все ли ок с сетью
