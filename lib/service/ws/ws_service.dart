@@ -31,8 +31,8 @@ class WSService {
         tls: true)
       ..connect();
 
-    messageListener = BehaviorSubject();
-    connectionListener = BehaviorSubject();
+    if (messageListener == null) messageListener = BehaviorSubject();
+    if (connectionListener == null) connectionListener = BehaviorSubject();
 
     onData = BehaviorSubject()
       ..listen((value) {
@@ -62,6 +62,7 @@ class WSService {
       });
     onDone = BehaviorSubject()
       ..listen((value) {
+        print('On Done');
         init();
       });
     _client = WSClient(websocket: websok, onData: onData);
@@ -70,7 +71,6 @@ class WSService {
   Future<void> cancelService() async {
     await _client?.cancelAllListeners();
     _client = null;
-    await messageListener?.close();
     await onData?.close();
     await onError?.close();
     await onDone?.close();

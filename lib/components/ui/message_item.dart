@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tada_client/helpers/date_helper.dart';
 import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
@@ -23,21 +24,29 @@ class MessageItem extends StatelessWidget {
     return Container(
       color: _styles.theme.backgroundColor,
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Text(
-            userName,
-            textAlign: TextAlign.start,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: _styles.theme.headline1TextStyle
-                .copyWith(fontWeight: FontWeight.bold),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                userName,
+                textAlign: TextAlign.start,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: _styles.theme.headline1TextStyle
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                message.text,
+                style: _styles.theme.subhead1TextStyle
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
-          Text(
-            message.text,
-            style: _styles.theme.subhead1TextStyle
-                .copyWith(fontWeight: FontWeight.bold),
+          Align(
+            alignment: const Alignment(1, 1),
+            child: Text(DateHelper.getNormalizedTime(message.created)),
           ),
         ],
       ),

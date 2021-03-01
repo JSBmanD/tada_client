@@ -57,6 +57,7 @@ class MainState extends Equatable {
   MainState copyWith({
     int version,
     bool isLoggedIn,
+    bool loadingData,
     List<Room> rooms,
     String roomId,
     String roomName,

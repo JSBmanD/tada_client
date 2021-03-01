@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:tada_client/helpers/date_helper.dart';
 import 'package:tada_client/models/domain/Message.dart';
 import 'package:tada_client/service/common/styles/styles_service.dart';
 
@@ -32,36 +33,45 @@ class RoomItem extends StatelessWidget {
         color: _styles.theme.backgroundColor,
         width: double.infinity,
         height: 90,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Container(
-              child: Text(
-                name,
-                textAlign: TextAlign.start,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: _styles.theme.subhead1TextStyle
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Container(
-              child: RichText(
-                textAlign: TextAlign.start,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  text: userName + ': ',
-                  style: _styles.theme.subhead2TextStyle
-                      .copyWith(fontWeight: FontWeight.bold),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: lastMessage.text,
-                      style: _styles.theme.subhead2TextStyle,
-                    ),
-                  ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                Container(
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: _styles.theme.subhead1TextStyle
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
+                Container(
+                  child: RichText(
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
+                      text: userName + ': ',
+                      style: _styles.theme.subhead2TextStyle
+                          .copyWith(fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: lastMessage.text,
+                          style: _styles.theme.subhead2TextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: const Alignment(1, -1),
+              child: Text(DateHelper.getNormalizedTime(lastMessage.created)),
             ),
           ],
         ),

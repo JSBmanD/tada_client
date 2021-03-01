@@ -76,7 +76,7 @@ class MainView extends StatelessWidget {
                   ),
                   Positioned(
                     right: 0,
-                    bottom: 16,
+                    bottom: 16 + MediaQuery.of(context).viewInsets.bottom,
                     height: 60,
                     width: 60,
                     child: Container(
@@ -89,9 +89,10 @@ class MainView extends StatelessWidget {
                         onTap: () {
                           showModalBottomSheet(
                               context: context,
+                              isScrollControlled: true,
                               builder: (innerContext) {
                                 return Container(
-                                  height: 300,
+                                  height: 330,
                                   color: _styles.theme.accentColor,
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
@@ -167,7 +168,7 @@ class MainView extends StatelessWidget {
                         child: Icon(Icons.edit),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

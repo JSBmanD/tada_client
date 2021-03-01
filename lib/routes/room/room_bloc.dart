@@ -17,6 +17,7 @@ import 'package:tada_client/service/ws/messaging/dto/SendMessageRequest.dart';
 import 'package:tada_client/service/ws/ws_service.dart';
 
 part 'room_event.dart';
+
 part 'room_state.dart';
 
 class RoomBloc extends Bloc<RoomEvent, RoomState> {
@@ -29,6 +30,7 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   final ConnectivityService _connect = Get.find();
 
   bool needUpdate = false;
+  bool blockUpdate = false;
 
   @override
   Stream<RoomState> mapEventToState(RoomEvent event) async* {
@@ -47,6 +49,12 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     InitRoom event,
     RoomState state,
   ) async* {
+    if (blockUpdate) return;
+    blockUpdate = true;
+    Timer(Duration(seconds: 1), () async {
+      blockUpdate = false;
+    });
+
     _connect.connectionStatus.listen((value) {
       if (value && needUpdate) {
         needUpdate = false;
@@ -69,10 +77,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     } on DioError catch (e) {
       if (!(e.error is String) && e.error.osError.errorCode == 7) {
         _error.addError(ErrorModel(message: 'Отсутствует подключение'));
-      } else
+      } else {
         _error.addError(ErrorModel(message: 'Ошибка при получении данных'));
+        add(InitRoom(event.roomId));
+      }
     } catch (e) {
       _error.addError(ErrorModel(message: 'Системная ошибка'));
+      add(InitRoom(event.roomId));
     }
   }
 

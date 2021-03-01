@@ -19,6 +19,7 @@ import 'package:tada_client/service/ws/messaging/dto/SendMessageRequest.dart';
 import 'package:tada_client/service/ws/ws_service.dart';
 
 part 'main_event.dart';
+
 part 'main_state.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
@@ -33,6 +34,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final _androidAppRetain = MethodChannel('android_app_retain');
 
   bool needUpdate = false;
+  bool blockUpdate = false;
 
   @override
   Stream<MainState> mapEventToState(MainEvent event) async* {
@@ -90,6 +92,12 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     InitRooms event,
     MainState state,
   ) async* {
+    if (blockUpdate) return;
+    blockUpdate = true;
+    Timer(Duration(seconds: 1), () async {
+      blockUpdate = false;
+    });
+
     _connect.connectionStatus.listen((value) {
       if (value && needUpdate) {
         needUpdate = false;
@@ -121,10 +129,13 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     } on DioError catch (e) {
       if (!(e.error is String) && e.error.osError.errorCode == 7) {
         _error.addError(ErrorModel(message: 'Отсутствует подключение'));
-      } else
+      } else {
         _error.addError(ErrorModel(message: 'Ошибка при получении данных'));
+        add(InitRooms());
+      }
     } catch (e) {
       _error.addError(ErrorModel(message: 'Системная ошибка'));
+      add(InitRooms());
     }
   }
 
@@ -202,14 +213,24 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     MessageAdded event,
     MainState state,
   ) {
-    state.rooms
-        .firstWhere((element) => element.name == event.message.room,
-            orElse: () => null)
-        ?.lastMessage = event.message;
+    Room room = state.rooms.firstWhere(
+        (element) => element.name == event.message.room,
+        orElse: () => null);
+    if (room == null)
+      state.rooms.add(Room(
+        name: event.message.room,
+        lastMessage: event.message,
+      ));
+    else
+      room.lastMessage = event.message;
+
     state.rooms.sort(((first, second) =>
         second.lastMessage.created.compareTo(first.lastMessage.created)));
     return state.copyWith(
-        rooms: state.rooms, roomId: state.roomId, version: state.version + 1);
+      rooms: state.rooms,
+      roomId: state.roomId,
+      version: state.version + 1,
+    );
   }
 
   MainState _mapOpenRoomToState(

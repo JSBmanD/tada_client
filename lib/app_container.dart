@@ -50,6 +50,7 @@ class _AppContainerState extends State<AppContainer> {
 
     _connectionSubscription = _connect.connectionStatus.listen((value) {
       setState(() {
+        print('Connection - $value');
         isConnectedToInternet = value;
       });
     });
