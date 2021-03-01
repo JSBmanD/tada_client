@@ -2,35 +2,44 @@ part of 'room_bloc.dart';
 
 /// Базовый класс состояния экрана комнаты
 class RoomState extends Equatable {
-  RoomState( {
+  RoomState({
     this.version = 0,
     this.messages,
-    this.textController,this.roomId,
+    this.comment,
+    this.roomId,
+    this.textController,
   }) {
-    this.textController = TextEditingController();
+    textController = textController ?? TextEditingController();
   }
 
   /// Версия для держании блока в курсе стейта
   final int version;
   final String roomId;
+  final String comment;
   final List<Message> messages;
   TextEditingController textController;
 
   @override
   List<Object> get props => [
         version,
+        roomId,
+        comment,
+        textController,
       ];
 
   RoomState copyWith({
     int version,
     List<Message> messages,
-    TextEditingController textController,String roomId,
+    String comment,
+    String roomId,
+    TextEditingController textController,
   }) {
     return RoomState(
       version: version ?? this.version,
       messages: messages ?? this.messages,
-      textController: textController ?? this.textController,
+      comment: comment ?? this.comment,
       roomId: roomId ?? this.roomId,
+      textController: textController ?? this.textController,
     );
   }
 }

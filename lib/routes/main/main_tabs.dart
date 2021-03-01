@@ -12,7 +12,7 @@ class MainTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainBloc(MainState())..add(InitRooms()),
+      create: (context) => MainBloc(MainState())..add(InitAuth()),
       child: _MainViewState(),
     );
   }
@@ -29,18 +29,18 @@ class __MainViewStateState extends State<_MainViewState>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MainBloc, MainState>(
+    return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         return Stack(
           alignment: Alignment.center,
           children: [
             WillPopScope(
               onWillPop: () async {
-                 context.read<MainBloc>().add(ClosePage());
+                context.read<MainBloc>().add(ClosePage());
                 return false;
               },
               child: Scaffold(
-                backgroundColor: Colors.transparent,
+                backgroundColor: _styles.theme.backgroundColor,
                 extendBodyBehindAppBar: true,
                 body: Navigator(
                   pages: [
@@ -56,13 +56,16 @@ class __MainViewStateState extends State<_MainViewState>
                       ),
                     if (state.roomId != null && state.roomId.isNotEmpty)
                       MaterialPage(
-                        child: RoomView(roomId: state.roomId),
+                        child: RoomView(
+                          roomId: state.roomId,
+                          mainBloc: BlocProvider.of<MainBloc>(context),
+                        ),
                       ),
                   ],
                   onPopPage: (route, result) {
                     if (!route.didPop(result)) return false;
 
-                    // context.read<MineProjectsBloc>().add(ClosePage());
+                    context.read<MainBloc>().add(ClosePage());
 
                     return true;
                   },
@@ -71,9 +74,6 @@ class __MainViewStateState extends State<_MainViewState>
             ),
           ],
         );
-      },
-      listener: (context, state) {
-        if (state.isLoggedIn) {}
       },
     );
   }

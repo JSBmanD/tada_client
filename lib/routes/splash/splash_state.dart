@@ -1,38 +1,28 @@
 part of 'splash_bloc.dart';
 
 /// Базовый класс состояния сплеша
-abstract class SplashState extends Equatable {
-  final int duration;
+class SplashState extends Equatable {
+  SplashState({
+    this.ticksUntilEnd = 1,
+    this.initFinished = false,
+  });
 
-  const SplashState(this.duration);
-
-  @override
-  List<Object> get props => [];
-}
-
-/// Инициализация
-class SplashInit extends SplashState {
-  SplashInit(int duration) : super(duration);
-}
-
-/// Загрузка
-class SplashProgress extends SplashState {
-  SplashProgress(int duration) : super(duration);
-}
-
-/// Завершение
-class SplashFinished extends SplashState {
-  SplashFinished(int duration) : super(duration);
-}
-
-/// Ошибка
-class SplashError extends SplashState {
-  final String message;
-
-  const SplashError({@required this.message})
-      : assert(message != null),
-        super(0);
+  final int ticksUntilEnd;
+  final bool initFinished;
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [
+        ticksUntilEnd,
+        initFinished,
+      ];
+
+  SplashState copyWith({
+    int ticksUntilEnd,
+    bool initFinished,
+  }) {
+    return SplashState(
+      ticksUntilEnd: ticksUntilEnd ?? this.ticksUntilEnd,
+      initFinished: initFinished ?? this.initFinished,
+    );
+  }
 }

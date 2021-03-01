@@ -51,8 +51,6 @@ class ErrorReporterHelper {
         Get.defaultDialog(
           title: 'Ошибка',
           middleText: message,
-          textCancel: 'Oк',
-          onCancel: callback,
         );
         break;
       default:

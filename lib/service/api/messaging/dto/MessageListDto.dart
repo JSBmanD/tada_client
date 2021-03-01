@@ -1,4 +1,3 @@
-import 'package:tada_client/models/domain/Sender.dart';
 import 'package:tada_client/service/api/messaging/dto/SenderDto.dart';
 
 class MessageListDto {
@@ -37,7 +36,7 @@ class Result {
     room = json['room'];
     created = json['created'];
     sender =
-    json['sender'] != null ? new SenderDto.fromJson(json['sender']) : null;
+        json['sender'] != null ? new SenderDto.fromJson(json['sender']) : null;
     text = json['text'];
     id = json['id'];
   }

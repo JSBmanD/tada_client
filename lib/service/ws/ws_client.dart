@@ -20,13 +20,13 @@ class WSClient {
     websocket
       ..listen(
         onData: (data) {
-          onData.add(data);
+          if (onData != null && !onData.isClosed) onData.add(data);
         },
         onError: (error) {
-          onError.add(error);
+          if (onError != null && !onError.isClosed) onError.add(error);
         },
         onDone: () {
-          onDone.add(true);
+          if (onDone != null && !onDone.isClosed) onDone.add(true);
         },
       );
   }
@@ -38,13 +38,11 @@ class WSClient {
     websocket.send(requestString);
   }
 
-/*  void onData(dynamic message) {
-    //final parsed = MessageDto.fromJson(json.decode(message));
-    messagesSubscription.add(message);
-    print(message);
-  }*/
-
   Future<void> ping() async {
     websocket.send('{"ping": true}');
+  }
+
+  Future<void> cancelAllListeners() async {
+    if (websocket?.isActive ?? false) await websocket?.close();
   }
 }

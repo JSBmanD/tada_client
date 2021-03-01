@@ -4,9 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:tada_client/helpers/regex_helper.dart';
 import 'package:tada_client/models/error_model.dart';
 import 'package:tada_client/service/business_logic/authorization_service.dart';
 import 'package:tada_client/service/common/log/error_service.dart';
+import 'package:tada_client/service/common/storage/storage_service.dart';
+import 'package:tada_client/service/ws/ws_service.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -16,6 +19,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   final AuthorizationService _authorization = Get.find();
   final ErrorService _errorService = Get.find();
+  final WSService _ws = Get.find();
+  final StorageService _storage = Get.find();
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -39,21 +44,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Login event,
     LoginState state,
   ) async* {
-    if (state.name?.isEmpty ?? true) {
+    final name = RegexHelper.removeUnneededSpaces(state.name);
+    if (name.isEmpty) {
       _errorService.addError(ErrorModel(
         message: 'Вы не ввели имя',
-        type: ErrorType.DIALOG,
       ));
       return;
-    } else if (state.name.length > 31) {
+    } else if (name.length >= _storage.userSettings.maxUsernameLength) {
       _errorService.addError(ErrorModel(
         message: 'Ваше имя слишком длинное',
-        type: ErrorType.DIALOG,
       ));
       return;
     }
 
-    await _authorization.auth(name: state.name);
-    yield state.copyWith(loginSuccess: true);
+    await _authorization.auth(name: name);
+    await _ws.init();
+    yield state.copyWith(
+      loginSuccess: true,
+      version: state.version + 1,
+    );
   }
 }

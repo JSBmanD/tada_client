@@ -15,9 +15,16 @@ class RoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userName = lastMessage.sender.username;
+    if (userName.contains(':443/?')) {
+      userName = userName.substring(0, userName.length - 6);
+    }
+
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
+      child: Container(
+        color: _styles.theme.backgroundColor,
+        width: double.infinity,
         height: 90,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,23 +35,23 @@ class RoomItem extends StatelessWidget {
                 textAlign: TextAlign.start,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: _styles.theme.headline1TextStyle
+                style: _styles.theme.subhead1TextStyle
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             Container(
               child: RichText(
                 textAlign: TextAlign.start,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 text: TextSpan(
-                  text: lastMessage.sender.username + ': ',
-                  style: _styles.theme.subhead1TextStyle
+                  text: userName + ': ',
+                  style: _styles.theme.subhead2TextStyle
                       .copyWith(fontWeight: FontWeight.bold),
                   children: <TextSpan>[
                     TextSpan(
                       text: lastMessage.text,
-                      style: _styles.theme.subhead1TextStyle,
+                      style: _styles.theme.subhead2TextStyle,
                     ),
                   ],
                 ),
